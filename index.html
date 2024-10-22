@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports</title>
+    <style>
+        body {
+            margin-top: 50px;
+            margin-left: 30px;
+            margin-right: 30px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(65, 65, 65);
+            color: white;
+        }
+
+        p {
+            margin: 0px;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav {
+            text-align: center;
+            color: green;
+            margin: 0px;
+        }
+
+        .main {
+            background-color: rgb(48, 48, 48);
+            border-radius: 10px;
+            height: 100vh;
+            max-width: 800px;
+            width: 80%; /* Default width */
+            margin: 0 auto;
+            padding-top: 20px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 20px;
+        }
+
+        .channel {
+            width: 160px;
+            height: 90px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            background-color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Added to handle image zoom overflow */
+            transition: box-shadow 0.3s ease;
+        }
+
+        .channel:hover {
+            box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.5); /* Green glow effect */
+        }
+
+        .img {
+            object-fit: contain;
+            max-width: 90%;
+            max-height: 90%;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s ease; /* For smooth zooming */
+        }
+
+        .channel:hover .img {
+            transform: scale(1.1); /* Slight zoom on hover */
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            .main {
+                width: 90%;  /* Narrower container for tablets */
+            }
+            .channel {
+                width: 140px;  /* Slightly smaller channels */
+                height: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main {
+                width: 100%;  /* Full width for mobile */
+            }
+            .channel {
+                width: 120px;  /* Smaller channel size for mobile */
+                height: 70px;
+            }
+            .img {
+                max-width: 90%;  /* Adjust image size */
+                max-height: 90%;
+            }
+            .heading {
+                font-size: 1.5em;
+            }
+            .sub-heading {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main">
+        <div class="nav">
+            <h1 class="heading">Live Sports Channels</h1>
+            <p class="sub-heading">Watch Live Sports for FREE</p>
+        </div>
+
+        <div class="content">
+            <a href="tsports.html">
+                <div class="channel">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/1/11/T_Sports_logo.png" alt="T Sports Logo" class="img">
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="channel">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFwd0kw63TldwEAYWr6HVcA6LpobsxzDmKeg&s" alt="Sports Channel 2" class="img">
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="channel">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDuSnhZM781OL5Yl9KapyIuEe_z8fNQrdqmw&s" alt="Sports Channel 3" class="img">
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="channel">
+                    <img src="https://skymediaglobal.b-cdn.net/wp-content/uploads/2020/09/Sky-Sports-Cricket-2020-logo-250.png" alt="Sports Channel 4" class="img">
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="channel">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvaQWvQGNUE12nC2tclWdOSSWid5nbZ8u-fA&s" alt="Sports Channel 5" class="img">
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="channel">
+                    <img src="https://sc.dish.com/shared/images/station-logos/WLXTR.png" alt="Sports Channel 6" class="img">
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="channel">
+                    <img src="https://sports-tv-channels.click/assets/images/super-sport-cricket-logo.jpg" alt="Sports Channel 6" class="img">
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="channel">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnSjlqrspYqxijybUDZCVPbgk4H0Pabgl4k989uYydMAs1xsrv2KNZECjd2X0smF8a1lI&usqp=CAU" alt="Sports Channel 6" class="img">
+                </div>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
