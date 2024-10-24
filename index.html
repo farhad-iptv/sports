@@ -3,174 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports</title>
+    <title>Live TV</title>
     <style>
         body {
-            margin-top: 50px;
-            margin-left: 30px;
-            margin-right: 30px;
-            padding: 0px;
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: rgb(65, 65, 65);
-            color: white;
+            font-family: Arial, sans-serif;
+            background-color: #646464;
+            margin: 0;
+            padding: 0;
         }
 
-        p {
-            margin: 0px;
+        /* Main container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        a {
-            text-decoration: none;
-            color: white;
+        .tv-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px 0;
         }
 
-        .nav {
-            text-align: center;
-            color: green;
-            margin: 0px;
-        }
-
-        .main {
-            background-color: rgb(48, 48, 48);
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
             border-radius: 10px;
-            height: 100vh;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+
+        .channel-slider-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            position: relative;
+            width: 100%;
             max-width: 800px;
-            width: 80%; /* Default width */
-            margin: 0 auto;
-            padding-top: 20px;
-            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         }
 
-        .content {
+        .channel-slider {
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            margin-top: 40px;
-            gap: 20px;
+            overflow-x: scroll;
+            scroll-behavior: smooth;
+            padding: 10px;
+            width: 100%;
         }
 
-        .channel {
-            width: 160px;
+        .channel-images {
+            display: flex;
+        }
+
+        .img-div {
+            width: 140px;
             height: 90px;
-            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             background-color: white;
-            border-radius: 8px;
+            margin-right: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden; /* Added to handle image zoom overflow */
-            transition: box-shadow 0.3s ease;
+            user-select: none;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         }
 
-        .channel:hover {
-            box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.5); /* Green glow effect */
-        }
-
-        .img {
+        .channel-slider img {
+            width: 60%;
             object-fit: contain;
-            max-width: 90%;
-            max-height: 90%;
-            display: block;
-            margin: 0 auto;
-            transition: transform 0.3s ease; /* For smooth zooming */
         }
 
-        .channel:hover .img {
-            transform: scale(1.1); /* Slight zoom on hover */
+        .img-div:hover {
+            transform: scale(1.1);
         }
 
-        /* Media queries for responsiveness */
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1;
+            opacity: 0.8;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            user-select: none;
+            border-radius: 4px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+
+        .scroll-button:active {
+            transform: scale(0.95);
+        }
+
+        .scroll-button:hover {
+            opacity: 1;
+        }
+
+        .left-button {
+            left: -40px;
+        }
+
+        .right-button {
+            right: -40px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 200px;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover, .close-btn:focus {
+            color: black;
+        }
+
+        .modal-links {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-links button {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .modal-links button:hover {
+            background-color: #555;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .main {
-                width: 90%;  /* Narrower container for tablets */
+            .tv-container iframe {
+                height: 300px;
             }
-            .channel {
-                width: 140px;  /* Slightly smaller channels */
-                height: 80px;
+
+            .channel-slider img {
+                width: 90px;
+                height: 70px;
             }
         }
 
         @media (max-width: 480px) {
-            .main {
-                width: 100%;  /* Full width for mobile */
+            iframe {
+                height: 250px;
             }
-            .channel {
-                width: 120px;  /* Smaller channel size for mobile */
+
+            .img-div {
+                width: 120px;
                 height: 70px;
             }
-            .img {
-                max-width: 90%;  /* Adjust image size */
-                max-height: 90%;
-            }
-            .heading {
-                font-size: 1.5em;
-            }
-            .sub-heading {
-                font-size: 1em;
+
+            .modal-content{
+                margin: 50% auto;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="main">
-        <div class="nav">
-            <h1 class="heading">Live Sports Channels</h1>
-            <p class="sub-heading">Watch Live Sports for FREE</p>
+<div class="main-container">
+    <div class="tv-container">
+        <iframe id="liveTV" src="https://www.example.com/initial-channel" allowfullscreen></iframe>
+    </div>
+
+    <div class="channel-slider-container">
+        <button class="scroll-button left-button" onclick="scrollSlider('left')">←</button>
+
+        <div class="channel-slider" id="channelSlider">
+            <div class="channel-images">
+                <!-- Replace data-links with actual channel link arrays -->
+                <div class="img-div" onclick="openModal(['https://www.example.com/channel1-1', 'https://www.example.com/channel1-2'])">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/1/11/T_Sports_logo.png" alt="Channel 1">
+                </div>
+
+                <div class="img-div" onclick="openModal(['https://www.example.com/channel2-1', 'https://www.example.com/channel2-2'])">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFwd0kw63TldwEAYWr6HVcA6LpobsxzDmKeg&s" alt="Channel 2">
+                </div>
+
+                <div class="img-div" onclick="openModal(['https://www.example.com/channel3-1', 'https://www.example.com/channel3-2'])">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDuSnhZM781OL5Yl9KapyIuEe_z8fNQrdqmw&s" alt="Channel 3">
+                </div>
+
+                <div class="img-div" onclick="openModal(['https://www.example.com/channel4-1', 'https://www.example.com/channel4-2'])">
+                    <img src="https://skymediaglobal.b-cdn.net/wp-content/uploads/2020/09/Sky-Sports-Cricket-2020-logo-250.png" alt="Channel 4">
+                </div>
+            </div>
         </div>
 
-        <div class="content">
-            <a href="tsports.html">
-                <div class="channel">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/1/11/T_Sports_logo.png" alt="T Sports Logo" class="img">
-                </div>
-            </a>
+        <button class="scroll-button right-button" onclick="scrollSlider('right')">→</button>
+    </div>
+</div>
 
-            <a href="ptv.html">
-                <div class="channel">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFwd0kw63TldwEAYWr6HVcA6LpobsxzDmKeg&s" alt="Sports Channel 2" class="img">
-                </div>
-            </a>
-
-            <a href="asports.html">
-                <div class="channel">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDuSnhZM781OL5Yl9KapyIuEe_z8fNQrdqmw&s" alt="Sports Channel 3" class="img">
-                </div>
-            </a>
-
-            <a href="skycric.html">
-                <div class="channel">
-                    <img src="https://skymediaglobal.b-cdn.net/wp-content/uploads/2020/09/Sky-Sports-Cricket-2020-logo-250.png" alt="Sports Channel 4" class="img">
-                </div>
-            </a>
-
-            <a href="willow.html">
-                <div class="channel">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvaQWvQGNUE12nC2tclWdOSSWid5nbZ8u-fA&s" alt="Sports Channel 5" class="img">
-                </div>
-            </a>
-
-            <a href="willowxtra.html">
-                <div class="channel">
-                    <img src="https://sc.dish.com/shared/images/station-logos/WLXTR.png" alt="Sports Channel 6" class="img">
-                </div>
-            </a>
-
-            <a href="sscric.html">
-                <div class="channel">
-                    <img src="https://sports-tv-channels.click/assets/images/super-sport-cricket-logo.jpg" alt="Sports Channel 6" class="img">
-                </div>
-            </a>
-
-            <a href="fox501.html">
-                <div class="channel">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnSjlqrspYqxijybUDZCVPbgk4H0Pabgl4k989uYydMAs1xsrv2KNZECjd2X0smF8a1lI&usqp=CAU" alt="Sports Channel 6" class="img">
-                </div>
-            </a>
+<!-- Modal Structure -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Select a Stream</h2>
+        <div class="modal-links" id="modalLinks">
+            <!-- Links will be inserted here dynamically -->
         </div>
     </div>
+</div>
+
+<script>
+    // Function to change iframe source based on selected link
+    function changeIframeSrc(newSrc) {
+        document.getElementById('liveTV').src = newSrc;
+        closeModal(); // Close modal after selecting link
+    }
+
+    // Function to open modal and populate links
+    function openModal(links) {
+        var modal = document.getElementById('myModal');
+        var modalLinks = document.getElementById('modalLinks');
+        modalLinks.innerHTML = ''; // Clear previous links
+        links.forEach(function(link, index) {
+            var button = document.createElement('button');
+            button.innerText = "Stream " + (index + 1);
+            button.onclick = function() {
+                changeIframeSrc(link);
+            };
+            modalLinks.appendChild(button);
+        });
+        modal.style.display = 'block';
+    }
+
+    // Function to close modal
+    function closeModal() {
+        var modal = document.getElementById('myModal');
+        modal.style.display = 'none';
+    }
+
+    // Function to scroll the slider
+    function scrollSlider(direction) {
+        var slider = document.getElementById('channelSlider');
+        var scrollAmount = 200;
+        if (direction === 'left') {
+            slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        } else {
+            slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+    }
+</script>
 
 </body>
 </html>
